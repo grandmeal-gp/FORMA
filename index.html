@@ -55,14 +55,16 @@
 
         .form-section {
             flex: 1;
+            width: 50%;
             padding: 10px;
             background: #f8fafc;
             overflow-y: auto;
-            border-right: none;
+            border-right: 1px solid #e2e8f0;
         }
 
         .chat-section {
-            flex: 2;
+            flex: 1;
+            width: 50%;
             display: flex;
             flex-direction: column;
             background: #ffffff;
@@ -183,7 +185,6 @@
             }
             .form-section {
                 padding: 20px;
-                border-right: 1px solid #e2e8f0;
             }
             .bubble {
                 font-size: 0.9rem;
@@ -202,8 +203,24 @@
             }
         }
 
-        /* Мобильная версия — чат во всю оставшуюся высоту */
+        /* Мобильная версия — колонки друг под другом */
         @media (max-width: 767px) {
+            .two-columns {
+                flex-direction: column;
+            }
+            .form-section, .chat-section {
+                width: 100%;
+                flex: none;
+            }
+            .form-section {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                max-height: 45%;
+            }
+            .chat-section {
+                flex: 1;
+                min-height: 55%;
+            }
             .row-2, .row-3 {
                 flex-direction: column;
                 gap: 6px;
