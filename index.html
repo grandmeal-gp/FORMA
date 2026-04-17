@@ -281,7 +281,7 @@
                 <div class="form-group"><label>🚃 Состав</label><select id="trainComposition"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
             </div>
             <div class="form-group"><label>🗺️ Маршрут</label><select id="routeSelect"><option>Симферополь-Москва</option><option>Москва-Симферополь</option><option>Севастополь-Москва</option><option>Москва-Севастополь</option><option>Санкт-Петербург-Севастополь</option><option>Севастополь-Санкт-Петербург</option><option>Симферополь-Пермь</option><option>Пермь-Симферополь</option><option>Симферополь-Адлер</option><option>Адлер-Симферополь</option><option>Омск-Симферополь</option><option>Симферополь-Омск</option><option>Санкт-Петербург-Москва</option><option>Москва-Санкт-Петербург</option><option>Санкт-Петербург-Евпатория</option><option>Евпатория-Санкт-Петербург</option></select></div>
-            <div class="form-group"><label>🚃 Вагон</label><input type="text" id="wagonNumber" value="07"></div>
+            <div class="form-group"><label>🚃 Номер вагона-ресторана</label><input type="text" id="wagonNumber" placeholder="66018" value="66018"></div>
             <div class="form-group"><label>📅 Дата прибытия</label><input type="date" id="arrivalDate" value="2025-03-20"></div>
             <div class="row-2"><div class="form-group"><label>💰 Выручка</label><input type="number" id="revenue" value="157800"></div><div class="form-group"><label>🧾 Чеков</label><input type="number" id="checkCount" value="34"></div></div>
             <div class="row-2"><div class="form-group"><label>👥 ГП</label><input type="number" id="gp" value="42"></div><div class="form-group"><label>👥 СВ</label><input type="number" id="sv" value="18"></div></div>
@@ -340,7 +340,6 @@
         messageDiv.appendChild(bubble);
         messageDiv.appendChild(timeSpan);
         wrapper.appendChild(messageDiv);
-        // кнопки копирования НЕТ
         chatContainer.appendChild(wrapper);
     }
 
@@ -407,7 +406,7 @@
 
         return `📌 Поезд: ${trainNumber} (${composition} состав)
 🗺️ Маршрут: ${route}
-🚃 Вагон: ${wagonNumber}
+🚃 Номер вагона-ресторана: ${wagonNumber}
 📅 Дата прибытия: ${arrivalDate}
 
 💰 Выручка: ${revenue.toLocaleString()} ₽
