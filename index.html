@@ -51,7 +51,7 @@
             flex: 1;
             min-height: 0;
             overflow: hidden;
-            flex-direction: row; /* всегда рядом */
+            flex-direction: row;
         }
 
         .form-section {
@@ -78,8 +78,14 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             background: #fefefe;
+        }
+
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
         }
 
         .message {
@@ -122,6 +128,28 @@
             color: #64748b;
             margin-top: 3px;
             margin-inline: 5px;
+        }
+
+        .copy-btn {
+            background: #e2e8f0;
+            border: none;
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            margin-top: 4px;
+            align-self: flex-end;
+            color: #1e293b;
+            transition: 0.15s;
+        }
+
+        .copy-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .copy-btn.copied {
+            background: #22c55e;
+            color: white;
         }
 
         .form-group {
@@ -170,6 +198,7 @@
             font-size: 0.8rem;
             width: 100%;
             margin-top: 6px;
+            cursor: pointer;
         }
 
         .clear-chat {
@@ -178,31 +207,33 @@
             margin-top: 6px;
         }
 
-        /* Десктоп и мобильные — единый стиль: колонки рядом */
-        .header {
-            padding: 16px 24px;
-            font-size: 1.3rem;
-        }
-        .form-section {
-            padding: 20px;
-        }
-        .bubble {
-            font-size: 0.9rem;
-            padding: 10px 14px;
-        }
-        label {
-            font-size: 0.8rem;
-        }
-        input, select, textarea {
-            padding: 8px 10px;
-            font-size: 0.85rem;
-        }
-        button {
-            padding: 10px 16px;
-            font-size: 0.9rem;
+        /* Десктоп */
+        @media (min-width: 768px) {
+            .header {
+                padding: 16px 24px;
+                font-size: 1.3rem;
+            }
+            .form-section {
+                padding: 20px;
+            }
+            .bubble {
+                font-size: 0.9rem;
+                padding: 10px 14px;
+            }
+            label {
+                font-size: 0.8rem;
+            }
+            input, select, textarea {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+            button {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
         }
 
-        /* чуть поджимаем на совсем маленьких экранах, но колонки оставляем рядом */
+        /* Маленькие экраны */
         @media (max-width: 600px) {
             .header {
                 padding: 8px 12px;
@@ -228,6 +259,10 @@
             }
             .row-2, .row-3 {
                 gap: 4px;
+            }
+            .copy-btn {
+                padding: 3px 8px;
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -286,33 +321,66 @@
     const dvrInp = document.getElementById('dvr');
     const chatContainer = document.getElementById('chatMessages');
 
+    // Добавление системного сообщения (инструкция) — без кнопки копирования
     function addInstructionMessage() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'message-wrapper';
+        
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message system';
+        
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
-        bubble.innerHTML = '1. Заполните форму и нажмите «Отправить».<br>2. Сообщение появится в чате.<br>3. Скопируйте и направьте в чат Exspress (группа ДВРы Гранд-Питание)';
+        bubble.innerHTML = '1. Заполните форму и нажмите «Отправить».<br>2. Сообщение появится в чате.<br>3. Скопируйте сообщение (кнопка под ним) и направьте в чат Exspress в группу ДВРы Гранд-Питание';
+        
         const timeSpan = document.createElement('div');
         timeSpan.className = 'time';
         timeSpan.textContent = 'только что';
+        
         messageDiv.appendChild(bubble);
         messageDiv.appendChild(timeSpan);
-        chatContainer.appendChild(messageDiv);
+        wrapper.appendChild(messageDiv);
+        // кнопки копирования НЕТ
+        chatContainer.appendChild(wrapper);
     }
 
-    function addMessageToChat(text, sender = 'system') {
+    // Добавление сообщения пользователя — С кнопкой копирования
+    function addUserMessageWithCopy(text) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'message-wrapper';
+        
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}`;
+        messageDiv.className = 'message user';
+        
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
         bubble.textContent = text;
+        
         const timeSpan = document.createElement('div');
         timeSpan.className = 'time';
         const now = new Date();
         timeSpan.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' });
+        
         messageDiv.appendChild(bubble);
         messageDiv.appendChild(timeSpan);
-        chatContainer.appendChild(messageDiv);
+        
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = '📋 Копировать';
+        copyBtn.className = 'copy-btn';
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(text).then(() => {
+                copyBtn.textContent = '✅ Скопировано!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = '📋 Копировать';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        };
+        
+        wrapper.appendChild(messageDiv);
+        wrapper.appendChild(copyBtn);
+        chatContainer.appendChild(wrapper);
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
@@ -372,7 +440,7 @@ ${incidents}
     function sendReportToChat() {
         const reportText = generateReportText();
         if (!reportText) return;
-        addMessageToChat(reportText, 'user');
+        addUserMessageWithCopy(reportText);
     }
 
     function clearChat() {
@@ -382,7 +450,9 @@ ${incidents}
         addInstructionMessage();
     }
 
+    // Инициализация: показываем инструкцию
     addInstructionMessage();
+
     document.getElementById('sendReportBtn').addEventListener('click', sendReportToChat);
     document.getElementById('clearChatBtn').addEventListener('click', clearChat);
 </script>
