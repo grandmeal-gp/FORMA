@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Экспресс-отчёт по поезду</title>
+    <title>Экспресс-отчёт Директора вагона-ресторана</title>
     <style>
         * {
             box-sizing: border-box;
@@ -76,8 +76,8 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-            min-height: 500px;
-            max-height: 600px;
+            min-height: 750px;
+            max-height: 850px;
             background: #fefefe;
         }
 
@@ -111,6 +111,17 @@
             border: 1px solid #e2e8f0;
             color: #0f172a;
             border-bottom-left-radius: 6px;
+        }
+
+        /* Специальный стиль для системных сообщений с пунктами */
+        .system .bubble.instruction {
+            padding: 12px 18px;
+        }
+
+        .instruction-line {
+            display: block;
+            margin-bottom: 4px;
+            white-space: nowrap;
         }
 
         .user .bubble {
@@ -150,7 +161,7 @@
 
         textarea {
             resize: vertical;
-            min-height: 70px;
+            min-height: 60px;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -165,6 +176,15 @@
         }
 
         .row-2 .form-group {
+            flex: 1;
+        }
+
+        .row-3 {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row-3 .form-group {
             flex: 1;
         }
 
@@ -212,25 +232,75 @@
 <body>
 <div class="dashboard">
     <div class="header">
-        🚆 Экспресс-отчёт проводника
+        🍽️ Экспресс-отчёт Директора вагона-ресторана
         <span>Чат-интеграция</span>
     </div>
     <div class="two-columns">
         <!-- ФОРМА ЗАПОЛНЕНИЯ -->
         <div class="form-section">
             <h3 style="margin-top:0;">📋 Данные по рейсу</h3>
-            <div class="form-group">
-                <label>🚂 Номер поезда</label>
-                <input type="text" id="trainNumber" placeholder="например: 042А" value="042А">
+
+            <div class="row-2">
+                <div class="form-group">
+                    <label>🚂 Номер поезда</label>
+                    <select id="trainNumber">
+                        <option value="27/28">27/28</option>
+                        <option value="67/68">67/68</option>
+                        <option value="17/18">17/18</option>
+                        <option value="91/92">91/92</option>
+                        <option value="195/196">195/196</option>
+                        <option value="97/98">97/98</option>
+                        <option value="53/54">53/54</option>
+                        <option value="141/142">141/142</option>
+                        <option value="75/76">75/76</option>
+                        <option value="315/316">315/316</option>
+                        <option value="7/8">7/8</option>
+                        <option value="179/180">179/180</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🚃 Состав (номер)</label>
+                    <select id="trainComposition">
+                        <option value="1">1 состав</option>
+                        <option value="2" selected>2 состав</option>
+                        <option value="3">3 состав</option>
+                        <option value="4">4 состав</option>
+                    </select>
+                </div>
             </div>
+
             <div class="form-group">
                 <label>🗺️ Маршрут</label>
-                <input type="text" id="route" placeholder="Москва → Санкт-Петербург" value="Москва → Санкт-Петербург">
+                <select id="routeSelect">
+                    <option value="Симферополь-Москва">Симферополь-Москва</option>
+                    <option value="Москва-Симферополь">Москва-Симферополь</option>
+                    <option value="Севастополь-Москва">Севастополь-Москва</option>
+                    <option value="Москва-Севастополь">Москва-Севастополь</option>
+                    <option value="Санкт-Петербург-Севастополь">Санкт-Петербург-Севастополь</option>
+                    <option value="Севастополь-Санкт-Петербург">Севастополь-Санкт-Петербург</option>
+                    <option value="Симферополь-Пермь">Симферополь-Пермь</option>
+                    <option value="Пермь-Симферополь">Пермь-Симферополь</option>
+                    <option value="Симферополь-Адлер">Симферополь-Адлер</option>
+                    <option value="Адлер-Симферополь">Адлер-Симферополь</option>
+                    <option value="Омск-Симферополь">Омск-Симферополь</option>
+                    <option value="Симферополь-Омск">Симферополь-Омск</option>
+                    <option value="Санкт-Петербург-Москва">Санкт-Петербург-Москва</option>
+                    <option value="Москва-Санкт-Петербург">Москва-Санкт-Петербург</option>
+                    <option value="Санкт-Петербург-Евпатория">Санкт-Петербург-Евпатория</option>
+                    <option value="Евпатория-Санкт-Петербург">Евпатория-Санкт-Петербург</option>
+                </select>
             </div>
+
             <div class="form-group">
-                <label>📅 Дата отчёта</label>
-                <input type="date" id="reportDate" value="2025-03-20">
+                <label>🚃 Номер вагона-ресторана</label>
+                <input type="text" id="wagonNumber" placeholder="например: 07" value="07">
             </div>
+
+            <div class="form-group">
+                <label>📅 Дата прибытия</label>
+                <input type="date" id="arrivalDate" value="2025-03-20">
+            </div>
+
             <div class="row-2">
                 <div class="form-group">
                     <label>💰 Выручка (₽)</label>
@@ -241,6 +311,7 @@
                     <input type="number" id="checkCount" value="34">
                 </div>
             </div>
+
             <div class="row-2">
                 <div class="form-group">
                     <label>👥 ГП</label>
@@ -251,63 +322,115 @@
                     <input type="number" id="sv" value="18">
                 </div>
             </div>
-            <div class="form-group">
-                <label>👑 ЛЮКС</label>
-                <input type="number" id="lux" value="6" placeholder="количество пассажиров Люкс">
+
+            <div class="row-3">
+                <div class="form-group">
+                    <label>🍳 ЛЮКС (завтрак)</label>
+                    <input type="number" id="luxBreakfast" value="4">
+                </div>
+                <div class="form-group">
+                    <label>🍽️ ЛЮКС (обед)</label>
+                    <input type="number" id="luxLunch" value="5">
+                </div>
+                <div class="form-group">
+                    <label>🍷 ЛЮКС (ужин)</label>
+                    <input type="number" id="luxDinner" value="3">
+                </div>
             </div>
-            <div class="form-group">
-                <label>🔥 ОГД (особые группы) — можно писать несколько строк</label>
-                <textarea id="ogd" rows="3" placeholder="льготники, ветераны и т.д.&#10;Каждая новая строчка сохранится">дети-инвалиды (3 чел)
-пенсионеры (2 чел)</textarea>
+
+            <div class="row-2">
+                <div class="form-group">
+                    <label>👶 ОГД (кол-во детей)</label>
+                    <input type="number" id="ogdKidsCount" value="7">
+                </div>
+                <div class="form-group">
+                    <label>🧸 ОГД (выручка, ₽)</label>
+                    <input type="number" id="ogdRevenue" value="12400">
+                </div>
             </div>
+
             <div class="form-group">
-                <label>✅ Замечания</label>
-                <textarea id="remarks" rows="2" placeholder="чистота, работа кондиционера...">Чисто, нареканий нет</textarea>
+                <label>📝 ГП замечания</label>
+                <textarea id="gpRemarks" rows="2">Чисто, нареканий нет</textarea>
             </div>
+
             <div class="form-group">
                 <label>⚠️ Неисправности</label>
-                <textarea id="malfunction" rows="2" placeholder="поломки оборудования">Датчик двери в 5 вагоне</textarea>
+                <textarea id="malfunction" rows="2">Датчик двери в 5 вагоне</textarea>
             </div>
+
+            <div class="form-group">
+                <label>🚨 Происшествия</label>
+                <textarea id="incidents" rows="2">За время рейса происшествий не зафиксировано</textarea>
+            </div>
+
             <div class="form-group">
                 <label>👤 ДВР (дежурный по вагону)</label>
-                <input type="text" id="dvr" placeholder="ФИО" value="Иванов А.А.">
+                <input type="text" id="dvr" value="Иванов А.А.">
             </div>
+
             <button id="sendReportBtn">📤 Отправить отчёт в чат Express</button>
             <button id="clearChatBtn" class="clear-chat" style="margin-top: 12px;">🗑 Очистить историю чата</button>
         </div>
 
-        <!-- ЧАТ EXPRESS -->
         <div class="chat-section">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message system">
-                    <div class="bubble">
-                        Заполните форму и нажмите «Отправить отчёт».<br>
-                        Сообщение появится как новое сообщение.<br>
-                        Скопируйте сообщение и направьте в чат Exspress в группу ДВРы Гранд-Питание
-                    </div>
-                    <div class="time">только что</div>
-                </div>
-            </div>
+            <div class="chat-messages" id="chatMessages"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // Элементы формы
-    const trainNumberInp = document.getElementById('trainNumber');
-    const routeInp = document.getElementById('route');
-    const reportDateInp = document.getElementById('reportDate');
+    const trainNumberSelect = document.getElementById('trainNumber');
+    const trainCompositionSelect = document.getElementById('trainComposition');
+    const routeSelect = document.getElementById('routeSelect');
+    const wagonNumberInp = document.getElementById('wagonNumber');
+    const arrivalDateInp = document.getElementById('arrivalDate');
     const revenueInp = document.getElementById('revenue');
     const checkCountInp = document.getElementById('checkCount');
     const gpInp = document.getElementById('gp');
     const svInp = document.getElementById('sv');
-    const luxInp = document.getElementById('lux');
-    const ogdInp = document.getElementById('ogd');
-    const remarksInp = document.getElementById('remarks');
+    const luxBreakfastInp = document.getElementById('luxBreakfast');
+    const luxLunchInp = document.getElementById('luxLunch');
+    const luxDinnerInp = document.getElementById('luxDinner');
+    const ogdKidsCountInp = document.getElementById('ogdKidsCount');
+    const ogdRevenueInp = document.getElementById('ogdRevenue');
+    const gpRemarksInp = document.getElementById('gpRemarks');
     const malfunctionInp = document.getElementById('malfunction');
+    const incidentsInp = document.getElementById('incidents');
     const dvrInp = document.getElementById('dvr');
-
     const chatContainer = document.getElementById('chatMessages');
+
+    function addInstructionMessage() {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message system';
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble instruction';
+        
+        const line1 = document.createElement('div');
+        line1.className = 'instruction-line';
+        line1.textContent = '1. Заполните форму и нажмите «Отправить отчёт».';
+        
+        const line2 = document.createElement('div');
+        line2.className = 'instruction-line';
+        line2.textContent = '2. Сообщение появится как новое сообщение.';
+        
+        const line3 = document.createElement('div');
+        line3.className = 'instruction-line';
+        line3.textContent = '3. Скопируйте сообщение и направьте в чат Exspress в группу ДВРы Гранд-Питание';
+        
+        bubble.appendChild(line1);
+        bubble.appendChild(line2);
+        bubble.appendChild(line3);
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'time';
+        timeSpan.textContent = 'только что';
+        
+        messageDiv.appendChild(bubble);
+        messageDiv.appendChild(timeSpan);
+        chatContainer.appendChild(messageDiv);
+    }
 
     function addMessageToChat(text, sender = 'system') {
         const messageDiv = document.createElement('div');
@@ -315,12 +438,12 @@
         
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
-        bubble.innerText = text;
+        bubble.textContent = text;
         
         const timeSpan = document.createElement('div');
         timeSpan.className = 'time';
         const now = new Date();
-        timeSpan.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' });
+        timeSpan.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' });
         
         messageDiv.appendChild(bubble);
         messageDiv.appendChild(timeSpan);
@@ -329,43 +452,56 @@
     }
 
     function generateReportText() {
-        let trainNumber = trainNumberInp.value.trim() || "не указан";
-        let route = routeInp.value.trim() || "не указан";
-        let reportDate = reportDateInp.value || "дата не задана";
-        let revenue = parseFloat(revenueInp.value);
-        if (isNaN(revenue)) revenue = 0;
-        let checkCount = parseInt(checkCountInp.value);
-        if (isNaN(checkCount)) checkCount = 0;
+        let trainNumber = trainNumberSelect.value;
+        let composition = trainCompositionSelect.value;
+        let route = routeSelect.value;
+        let wagonNumber = wagonNumberInp.value.trim() || "не указан";
+        let arrivalDate = arrivalDateInp.value || "дата не задана";
+        let revenue = parseFloat(revenueInp.value) || 0;
+        let checkCount = parseInt(checkCountInp.value) || 0;
         let gp = gpInp.value || "0";
         let sv = svInp.value || "0";
-        let lux = luxInp.value || "0";
-        let ogd = ogdInp.value.trim() || "—";
-        let remarks = remarksInp.value.trim() || "—";
+        let luxBreakfast = parseInt(luxBreakfastInp.value) || 0;
+        let luxLunch = parseInt(luxLunchInp.value) || 0;
+        let luxDinner = parseInt(luxDinnerInp.value) || 0;
+        let ogdKids = parseInt(ogdKidsCountInp.value) || 0;
+        let ogdRevenueVal = parseFloat(ogdRevenueInp.value) || 0;
+        let gpRemarks = gpRemarksInp.value.trim() || "—";
         let malfunction = malfunctionInp.value.trim() || "—";
+        let incidents = incidentsInp.value.trim() || "—";
         let dvr = dvrInp.value.trim() || "—";
-
         let avgCheck = (checkCount === 0) ? 0 : revenue / checkCount;
 
-        // Формируем отчёт (ОГД сохраняет переносы строк)
-        const report = `📌 Поезд: ${trainNumber}
+        return `📌 Поезд: ${trainNumber} (${composition} состав)
 🗺️ Маршрут: ${route}
-📅 Дата: ${reportDate}
+🚃 Вагон: ${wagonNumber}
+📅 Дата прибытия: ${arrivalDate}
 
 💰 Выручка: ${revenue.toLocaleString()} ₽
 🧾 Чеков: ${checkCount.toLocaleString()} шт.
 📊 Средний чек: ${Math.round(avgCheck).toLocaleString()} ₽
 
 👥 Пассажиры: ГП ${gp} | СВ ${sv}
-👑 ЛЮКС: ${lux}
-🔥 ОГД:
-${ogd}
-✅ Замечания:
-${remarks}
+
+👑 ЛЮКС:
+   🍳 завтрак: ${luxBreakfast}
+   🍽️ обед: ${luxLunch}
+   🍷 ужин: ${luxDinner}
+
+👶 ОГД (дети):
+   🧸 Количество детей: ${ogdKids}
+   💰 Выручка: ${ogdRevenueVal.toLocaleString()} ₽
+
+📝 ГП замечания:
+${gpRemarks}
+
 ⚠️ Неисправности:
 ${malfunction}
-👤 ДВР: ${dvr}`;
 
-        return report;
+🚨 Происшествия:
+${incidents}
+
+👤 ДВР: ${dvr}`;
     }
 
     function sendReportToChat() {
@@ -378,22 +514,13 @@ ${malfunction}
         while (chatContainer.firstChild) {
             chatContainer.removeChild(chatContainer.firstChild);
         }
-        const welcomeDiv = document.createElement('div');
-        welcomeDiv.className = 'message system';
-        welcomeDiv.innerHTML = `<div class="bubble">Заполните форму и нажмите «Отправить отчёт».<br>
-                                 Сообщение появится как новое сообщение.<br>
-                                 Скопируйте сообщение и направьте в чат Exspress в группу ДВРы Гранд-Питание</div>
-                                <div class="time">${new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })}</div>`;
-        chatContainer.appendChild(welcomeDiv);
+        addInstructionMessage();
     }
 
-    document.getElementById('sendReportBtn').addEventListener('click', () => {
-        sendReportToChat();
-    });
-    
-    document.getElementById('clearChatBtn').addEventListener('click', () => {
-        clearChat();
-    });
+    addInstructionMessage();
+
+    document.getElementById('sendReportBtn').addEventListener('click', sendReportToChat);
+    document.getElementById('clearChatBtn').addEventListener('click', clearChat);
 </script>
 </body>
 </html>
