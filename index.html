@@ -293,10 +293,10 @@
                 <div class="form-group"><label>👥 СВ</label><input type="number" id="gpSv" placeholder="0" value=""></div>
             </div>
             
-            <!-- Каши комплиментарные (только для поезда 27/28) -->
+            <!-- Каши комплементарные (только для поезда 27/28) -->
             <div class="form-group" id="porridgeGroup" style="display: none;">
-                <label>🥣 Каши комплиментарные</label>
-                <input type="text" id="porridge" placeholder="например: рисовая, гречневая" value="">
+                <label>🥣 Каши комплементарные</label>
+                <input type="text" id="porridge" placeholder="например: 1,2,3 или 4,5,6" value="">
                 <div class="info-hint">Заполняется только для поезда 27/28</div>
             </div>
             
@@ -343,7 +343,7 @@
     const dvrInp = document.getElementById('dvr');
     const chatContainer = document.getElementById('chatMessages');
 
-    // Показываем/скрываем поле "Каши комплиментарные" в зависимости от выбранного поезда
+    // Показываем/скрываем поле "Каши комплементарные" в зависимости от выбранного поезда
     trainNumberSelect.addEventListener('change', function() {
         if (this.value === '27/28') {
             porridgeGroup.style.display = 'block';
@@ -438,7 +438,7 @@
 
         // Добавляем строку с кашами только если выбран поезд 27/28 и поле заполнено
         if (trainNumber === '27/28' && porridge) {
-            result += `\n🥣 Каши комплиментарные: ${porridge}`;
+            result += `\n🥣 Каши комплементарные: ${porridge}`;
         }
 
         result += `\n👑 ЛЮКС:
