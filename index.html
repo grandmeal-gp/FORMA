@@ -207,6 +207,12 @@
             margin-top: 6px;
         }
 
+        .info-hint {
+            font-size: 0.65rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
         @media (min-width: 768px) {
             .header {
                 padding: 16px 24px;
@@ -286,6 +292,14 @@
                 <div class="form-group"><label>👥 ГП (Купе)</label><input type="number" id="gpCoupe" placeholder="0" value=""></div>
                 <div class="form-group"><label>👥 СВ</label><input type="number" id="gpSv" placeholder="0" value=""></div>
             </div>
+            
+            <!-- Каши комплиментарные (только для поезда 27/28) -->
+            <div class="form-group" id="porridgeGroup" style="display: none;">
+                <label>🥣 Каши комплиментарные</label>
+                <input type="text" id="porridge" placeholder="например: рисовая, гречневая" value="">
+                <div class="info-hint">Заполняется только для поезда 27/28</div>
+            </div>
+            
             <div class="row-3"><div class="form-group"><label>🍳 ЛЮКС завтрак</label><input type="number" id="luxBreakfast" placeholder="0" value=""></div><div class="form-group"><label>🍽️ обед</label><input type="number" id="luxLunch" placeholder="0" value=""></div><div class="form-group"><label>🍷 ужин</label><input type="number" id="luxDinner" placeholder="0" value=""></div></div>
             
             <div class="row-2">
@@ -316,6 +330,8 @@
     const checkCountInp = document.getElementById('checkCount');
     const gpCoupeInp = document.getElementById('gpCoupe');
     const gpSvInp = document.getElementById('gpSv');
+    const porridgeInp = document.getElementById('porridge');
+    const porridgeGroup = document.getElementById('porridgeGroup');
     const luxBreakfastInp = document.getElementById('luxBreakfast');
     const luxLunchInp = document.getElementById('luxLunch');
     const luxDinnerInp = document.getElementById('luxDinner');
@@ -326,6 +342,16 @@
     const incidentsInp = document.getElementById('incidents');
     const dvrInp = document.getElementById('dvr');
     const chatContainer = document.getElementById('chatMessages');
+
+    // Показываем/скрываем поле "Каши комплиментарные" в зависимости от выбранного поезда
+    trainNumberSelect.addEventListener('change', function() {
+        if (this.value === '27/28') {
+            porridgeGroup.style.display = 'block';
+        } else {
+            porridgeGroup.style.display = 'none';
+            porridgeInp.value = '';
+        }
+    });
 
     function addInstructionMessage() {
         const wrapper = document.createElement('div');
@@ -387,6 +413,7 @@
         let checkCount = parseInt(checkCountInp.value) || 0;
         let gpCoupe = gpCoupeInp.value || "0";
         let gpSv = gpSvInp.value || "0";
+        let porridge = porridgeInp.value.trim();
         let luxBreakfast = parseInt(luxBreakfastInp.value) || 0;
         let luxLunch = parseInt(luxLunchInp.value) || 0;
         let luxDinner = parseInt(luxDinnerInp.value) || 0;
@@ -397,19 +424,24 @@
         let incidents = incidentsInp.value.trim() || "—";
         let dvr = dvrInp.value.trim() || "—";
 
-        // Если поезд не выбран, показываем "—"
         if (!trainNumber) trainNumber = "—";
         if (!composition) composition = "—";
         if (!route) route = "—";
 
-        return `📌 Поезд: ${trainNumber} (${composition} состав)
+        let result = `📌 Поезд: ${trainNumber} (${composition} состав)
 🗺️ Маршрут: ${route}
 🚃 №ВР: ${wagonNumber}
 📅 Дата прибытия: ${arrivalDate}
 💰 Выручка: ${revenue.toLocaleString()} ₽
 🧾 Чеков: ${checkCount.toLocaleString()} шт.
-👥 ГП: Купе ${gpCoupe} | СВ ${gpSv}
-👑 ЛЮКС:
+👥 ГП: Купе ${gpCoupe} | СВ ${gpSv}`;
+
+        // Добавляем строку с кашами только если выбран поезд 27/28 и поле заполнено
+        if (trainNumber === '27/28' && porridge) {
+            result += `\n🥣 Каши комплиментарные: ${porridge}`;
+        }
+
+        result += `\n👑 ЛЮКС:
    🍳 завтрак: ${luxBreakfast}
    🍽️ обед: ${luxLunch}
    🍷 ужин: ${luxDinner}
@@ -421,6 +453,8 @@ ${malfunction}
 🚨 Происшествия:
 ${incidents}
 👤 ДВР: ${dvr}`;
+
+        return result;
     }
 
     function sendReportToChat() {
