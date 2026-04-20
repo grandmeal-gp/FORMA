@@ -207,6 +207,45 @@
             margin-top: 6px;
         }
 
+        .ogd-group {
+            background: #f1f5f9;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .ogd-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+
+        .remove-ogd-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.65rem;
+            cursor: pointer;
+        }
+
+        .add-ogd-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+        }
+
         @media (min-width: 768px) {
             .header {
                 padding: 16px 24px;
@@ -287,7 +326,34 @@
                 <div class="form-group"><label>👥 СВ</label><input type="number" id="gpSv" value="23"></div>
             </div>
             <div class="row-3"><div class="form-group"><label>🍳 ЛЮКС завтрак</label><input type="number" id="luxBreakfast" value="4"></div><div class="form-group"><label>🍽️ обед</label><input type="number" id="luxLunch" value="5"></div><div class="form-group"><label>🍷 ужин</label><input type="number" id="luxDinner" value="3"></div></div>
-            <div class="row-2"><div class="form-group"><label>👶 ОГД дети</label><input type="number" id="ogdKidsCount" value="7"></div><div class="form-group"><label>🧸 выручка</label><input type="number" id="ogdRevenue" value="12400"></div></div>
+            
+            <div class="form-group">
+                <label>👶 ОГД (группы детей)</label>
+                <div id="ogdGroupsContainer">
+                    <div class="ogd-group" data-group-index="0">
+                        <div class="ogd-group-header">
+                            <span>Группа 1</span>
+                            <button type="button" class="remove-ogd-btn" onclick="removeOgdGroup(this)">✖ Удалить</button>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group"><label>👶 Количество детей</label><input type="number" class="ogd-kids" value="4" placeholder="кол-во"></div>
+                            <div class="form-group"><label>💰 Выручка (₽)</label><input type="number" class="ogd-revenue" value="2200" placeholder="выручка"></div>
+                        </div>
+                    </div>
+                    <div class="ogd-group" data-group-index="1">
+                        <div class="ogd-group-header">
+                            <span>Группа 2</span>
+                            <button type="button" class="remove-ogd-btn" onclick="removeOgdGroup(this)">✖ Удалить</button>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group"><label>👶 Количество детей</label><input type="number" class="ogd-kids" value="5" placeholder="кол-во"></div>
+                            <div class="form-group"><label>💰 Выручка (₽)</label><input type="number" class="ogd-revenue" value="3500" placeholder="выручка"></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="add-ogd-btn" onclick="addOgdGroup()">+ Добавить группу</button>
+            </div>
+            
             <div class="form-group"><label>📝 ГП замечания</label><textarea id="gpRemarks" rows="1">Чисто, нареканий нет</textarea></div>
             <div class="form-group"><label>⚠️ Неисправности</label><textarea id="malfunction" rows="1">Датчик двери в 5 вагоне</textarea></div>
             <div class="form-group"><label>🚨 Происшествия</label><textarea id="incidents" rows="1">За время рейса происшествий не зафиксировано</textarea></div>
@@ -302,6 +368,57 @@
 </div>
 
 <script>
+    let ogdGroupCounter = 2;
+
+    function addOgdGroup() {
+        const container = document.getElementById('ogdGroupsContainer');
+        const groupCount = container.children.length;
+        const newIndex = groupCount;
+        
+        const newGroup = document.createElement('div');
+        newGroup.className = 'ogd-group';
+        newGroup.setAttribute('data-group-index', newIndex);
+        newGroup.innerHTML = `
+            <div class="ogd-group-header">
+                <span>Группа ${newIndex + 1}</span>
+                <button type="button" class="remove-ogd-btn" onclick="removeOgdGroup(this)">✖ Удалить</button>
+            </div>
+            <div class="row-2">
+                <div class="form-group"><label>👶 Количество детей</label><input type="number" class="ogd-kids" value="0" placeholder="кол-во"></div>
+                <div class="form-group"><label>💰 Выручка (₽)</label><input type="number" class="ogd-revenue" value="0" placeholder="выручка"></div>
+            </div>
+        `;
+        container.appendChild(newGroup);
+    }
+
+    function removeOgdGroup(button) {
+        const group = button.closest('.ogd-group');
+        if (document.querySelectorAll('.ogd-group').length > 1) {
+            group.remove();
+            const groups = document.querySelectorAll('.ogd-group');
+            groups.forEach((g, idx) => {
+                const headerSpan = g.querySelector('.ogd-group-header span');
+                if (headerSpan) {
+                    headerSpan.textContent = `Группа ${idx + 1}`;
+                }
+                g.setAttribute('data-group-index', idx);
+            });
+        } else {
+            alert('Должна быть хотя бы одна группа');
+        }
+    }
+
+    function getOgdGroupsData() {
+        const groups = [];
+        const groupElements = document.querySelectorAll('.ogd-group');
+        groupElements.forEach((group, idx) => {
+            const kids = parseInt(group.querySelector('.ogd-kids').value) || 0;
+            const revenue = parseInt(group.querySelector('.ogd-revenue').value) || 0;
+            groups.push({ num: idx + 1, kids: kids, revenue: revenue });
+        });
+        return groups;
+    }
+
     const trainNumberSelect = document.getElementById('trainNumber');
     const trainCompositionSelect = document.getElementById('trainComposition');
     const routeSelect = document.getElementById('routeSelect');
@@ -314,8 +431,6 @@
     const luxBreakfastInp = document.getElementById('luxBreakfast');
     const luxLunchInp = document.getElementById('luxLunch');
     const luxDinnerInp = document.getElementById('luxDinner');
-    const ogdKidsCountInp = document.getElementById('ogdKidsCount');
-    const ogdRevenueInp = document.getElementById('ogdRevenue');
     const gpRemarksInp = document.getElementById('gpRemarks');
     const malfunctionInp = document.getElementById('malfunction');
     const incidentsInp = document.getElementById('incidents');
@@ -385,12 +500,19 @@
         let luxBreakfast = parseInt(luxBreakfastInp.value) || 0;
         let luxLunch = parseInt(luxLunchInp.value) || 0;
         let luxDinner = parseInt(luxDinnerInp.value) || 0;
-        let ogdKids = parseInt(ogdKidsCountInp.value) || 0;
-        let ogdRevenueVal = parseFloat(ogdRevenueInp.value) || 0;
         let gpRemarks = gpRemarksInp.value.trim() || "—";
         let malfunction = malfunctionInp.value.trim() || "—";
         let incidents = incidentsInp.value.trim() || "—";
         let dvr = dvrInp.value.trim() || "—";
+        
+        const ogdGroups = getOgdGroupsData();
+        
+        let ogdText = '';
+        for (let i = 0; i < ogdGroups.length; i++) {
+            const group = ogdGroups[i];
+            ogdText += `   Группа ${group.num}: ${group.kids} детей | ${group.revenue.toLocaleString()} ₽`;
+            if (i < ogdGroups.length - 1) ogdText += '\n';
+        }
 
         return `📌 Поезд: ${trainNumber} (${composition} состав)
 🗺️ Маршрут: ${route}
@@ -404,8 +526,7 @@
    🍽️ обед: ${luxLunch}
    🍷 ужин: ${luxDinner}
 👶 ОГД (дети):
-   🧸 Количество детей: ${ogdKids}
-   💰 Выручка: ${ogdRevenueVal.toLocaleString()} ₽
+${ogdText}
 📝 ГП замечания:
 ${gpRemarks}
 ⚠️ Неисправности:
