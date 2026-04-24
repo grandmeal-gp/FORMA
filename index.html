@@ -275,7 +275,7 @@
 <div class="dashboard">
     <div class="header">
         🍽️ Экспресс-отчёт Директора вагона-ресторана
-        <span>Чат</span>
+        <span>Копировать сообщение</span>
     </div>
     <div class="two-columns">
         <div class="form-section">
@@ -300,7 +300,11 @@
                 <div class="info-hint">Заполняется только для поезда 27/28</div>
             </div>
             
-            <div class="row-3"><div class="form-group"><label>🍳 ЛЮКС завтрак</label><input type="number" id="luxBreakfast" placeholder="0" value=""></div><div class="form-group"><label>🍽️ обед</label><input type="number" id="luxLunch" placeholder="0" value=""></div><div class="form-group"><label>🍷 ужин</label><input type="number" id="luxDinner" placeholder="0" value=""></div></div>
+            <div class="row-3">
+                <div class="form-group"><label>🍳 ЛЮКС завтрак</label><input type="number" id="luxBreakfast" placeholder="0" value=""></div>
+                <div class="form-group"><label>🍽️ ЛЮКС обед</label><input type="number" id="luxLunch" placeholder="0" value=""></div>
+                <div class="form-group"><label>🍷 ЛЮКС ужин</label><input type="number" id="luxDinner" placeholder="0" value=""></div>
+            </div>
             
             <div class="row-2">
                 <div class="form-group"><label>👶 ОГД (дети)</label><input type="text" id="ogdKids" placeholder="например: 1,2,3 или 4,5,6" value=""></div>
@@ -311,7 +315,7 @@
             <div class="form-group"><label>⚠️ Неисправности</label><textarea id="malfunction" rows="1" placeholder="Неисправности"></textarea></div>
             <div class="form-group"><label>🚨 Происшествия</label><textarea id="incidents" rows="1" placeholder="Происшествия"></textarea></div>
             <div class="form-group"><label>👤 ДВР</label><input type="text" id="dvr" placeholder="ФИО" value=""></div>
-            <button id="sendReportBtn">📤 Отправить</button>
+            <button id="sendReportBtn">📤 Сформировать и скопировать</button>
             <button id="clearChatBtn" class="clear-chat">🗑 Очистить чат</button>
         </div>
         <div class="chat-section">
@@ -343,7 +347,6 @@
     const dvrInp = document.getElementById('dvr');
     const chatContainer = document.getElementById('chatMessages');
 
-    // Показываем/скрываем поле "Каши комплементарные" в зависимости от выбранного поезда
     trainNumberSelect.addEventListener('change', function() {
         if (this.value === '27/28') {
             porridgeGroup.style.display = 'block';
@@ -360,7 +363,7 @@
         messageDiv.className = 'message system';
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
-        bubble.innerHTML = '1. Заполните форму и нажмите «Отправить».<br>2. Сообщение появится в чате.<br>3. Скопируйте сообщение (кнопка под ним) и направьте в чат Exspress в группу ДВРы Гранд-Питание';
+        bubble.innerHTML = '1. Заполните форму и нажмите «Сформировать и скопировать».<br>2. Сообщение появится в чате.<br>3. Нажмите «Копировать» под сообщением, чтобы скопировать текст.<br>4. Вставьте сообщение в чат Express (группа ДВРы Гранд-Питание).';
         const timeSpan = document.createElement('div');
         timeSpan.className = 'time';
         timeSpan.textContent = 'только что';
@@ -436,15 +439,14 @@
 🧾 Чеков: ${checkCount.toLocaleString()} шт.
 👥 ГП: Купе ${gpCoupe} | СВ ${gpSv}`;
 
-        // Добавляем строку с кашами только если выбран поезд 27/28 и поле заполнено
         if (trainNumber === '27/28' && porridge) {
             result += `\n🥣 Каши комплементарные: ${porridge}`;
         }
 
         result += `\n👑 ЛЮКС:
-   🍳 завтрак: ${luxBreakfast}
-   🍽️ обед: ${luxLunch}
-   🍷 ужин: ${luxDinner}
+   завтрак: ${luxBreakfast}
+   обед: ${luxLunch}
+   ужин: ${luxDinner}
 👶 ОГД: детей ${ogdKids} | выручка ${ogdRevenueVal.toLocaleString()} ₽
 📝 ГП замечания:
 ${gpRemarks}
