@@ -281,10 +281,55 @@
         <div class="form-section">
             <h3 style="margin:0 0 6px 0;">📋 Данные</h3>
             <div class="row-2">
-                <div class="form-group"><label>🚂 Поезд</label><select id="trainNumber"><option value="">-- выберите --</option><option>27/28</option><option>67/68</option><option>17/18</option><option>91/92</option><option>195/196</option><option>97/98</option><option>53/54</option><option>141/142</option><option>75/76</option><option>315/316</option><option>7/8</option><option>179/180</option></select></div>
+                <div class="form-group"><label>🚂 Поезд</label>
+                    <select id="trainNumber">
+                        <option value="">-- выберите --</option>
+                        <option>27/28</option>
+                        <option>67/68</option>
+                        <option>17/18</option>
+                        <option>91/92</option>
+                        <option>195/196</option>
+                        <option>97/98</option>
+                        <option>53/54</option>
+                        <option>141/142</option>
+                        <option>75/76</option>
+                        <option>315/316</option>
+                        <option>7/8</option>
+                        <option>179/180</option>
+                        <option>153/154</option>
+                        <option>433/435</option>
+                        <option>177/178</option>
+                    </select>
+                </div>
                 <div class="form-group"><label>🚃 Состав</label><select id="trainComposition"><option value="">-- выберите --</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
             </div>
-            <div class="form-group"><label>🗺️ Маршрут</label><select id="routeSelect"><option value="">-- выберите --</option><option>Симферополь-Москва</option><option>Москва-Симферополь</option><option>Севастополь-Москва</option><option>Москва-Севастополь</option><option>Санкт-Петербург-Севастополь</option><option>Севастополь-Санкт-Петербург</option><option>Симферополь-Пермь</option><option>Пермь-Симферополь</option><option>Симферополь-Адлер</option><option>Адлер-Симферополь</option><option>Омск-Симферополь</option><option>Симферополь-Омск</option><option>Санкт-Петербург-Москва</option><option>Москва-Санкт-Петербург</option><option>Санкт-Петербург-Евпатория</option><option>Евпатория-Санкт-Петербург</option></select></div>
+            <div class="form-group"><label>🗺️ Маршрут</label>
+                <select id="routeSelect">
+                    <option value="">-- выберите --</option>
+                    <option>Симферополь-Москва</option>
+                    <option>Москва-Симферополь</option>
+                    <option>Севастополь-Москва</option>
+                    <option>Москва-Севастополь</option>
+                    <option>Санкт-Петербург-Севастополь</option>
+                    <option>Севастополь-Санкт-Петербург</option>
+                    <option>Симферополь-Пермь</option>
+                    <option>Пермь-Симферополь</option>
+                    <option>Симферополь-Адлер</option>
+                    <option>Адлер-Симферополь</option>
+                    <option>Омск-Симферополь</option>
+                    <option>Симферополь-Омск</option>
+                    <option>Санкт-Петербург-Москва</option>
+                    <option>Москва-Санкт-Петербург</option>
+                    <option>Санкт-Петербург-Евпатория</option>
+                    <option>Евпатория-Санкт-Петербург</option>
+                    <option>Санкт-Петербург-Анапа</option>
+                    <option>Анапа-Санкт-Петербург</option>
+                    <option>Москва-Ростов</option>
+                    <option>Ростов-Москва</option>
+                    <option>Москва-Новороссийск</option>
+                    <option>Новороссийск-Москва</option>
+                </select>
+            </div>
             <div class="form-group"><label>🚃 №ВР</label><input type="text" id="wagonNumber" placeholder="Номер вагона-ресторана" value=""></div>
             <div class="form-group"><label>📅 Дата прибытия</label><input type="date" id="arrivalDate" value=""></div>
             <div class="row-2"><div class="form-group"><label>💰 Выручка</label><input type="number" id="revenue" placeholder="0" value=""></div><div class="form-group"><label>🧾 Чеков</label><input type="number" id="checkCount" placeholder="0" value=""></div></div>
@@ -301,9 +346,9 @@
             </div>
             
             <div class="row-3">
-                <div class="form-group"><label>🍳 ЛЮКС завтрак</label><input type="number" id="luxBreakfast" placeholder="0" value=""></div>
-                <div class="form-group"><label>🍽️ ЛЮКС обед</label><input type="number" id="luxLunch" placeholder="0" value=""></div>
-                <div class="form-group"><label>🍷 ЛЮКС ужин</label><input type="number" id="luxDinner" placeholder="0" value=""></div>
+                <div class="form-group"><label>ЛЮКС завтрак</label><input type="number" id="luxBreakfast" placeholder="0" value=""></div>
+                <div class="form-group"><label>ЛЮКС обед</label><input type="number" id="luxLunch" placeholder="0" value=""></div>
+                <div class="form-group"><label>ЛЮКС ужин</label><input type="number" id="luxDinner" placeholder="0" value=""></div>
             </div>
             
             <div class="row-2">
